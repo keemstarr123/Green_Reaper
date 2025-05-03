@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Ground CTRL: AI-powered eco-friendly housing tender platform. From Blueprints to Greenprints." />
+  <title>Ground CTRL!</title>
+
+  <!-- Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script>tailwind.config={theme:{extend:{colors:{primary:'#4CAF50',secondary:'#8BC34A'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Winky+Rough:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+    animation: gradientMove 8s ease infinite;
+      background: linear-gradient(-45deg, gray, white, #2a2a2a);
+      background-size: 400% 400%;
+    }
+
+
+    @keyframes gradientMove {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    header {
+      background-color: white;
+    }
+
+    footer {
+      background-color: white;
+    }
+
+    .icon {
+      font-size: 3rem;
+      color: #6b46c1;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+
+<body class="bg-white">
+
+  <!-- Header -->
+  <header class="bg-white/50 p-2 px-5 border-b border-gray-300 flex items-center flex-wrap">
+    <div class="flex items-center">
+      <img src="https://assets.onecompiler.app/43ghswyvy/43ghsutfw/WhatsApp_Image_2025-05-01_at_15.08.38_ca6682f5-removebg-preview.png" alt="Green Reaper Logo" class="h-12 mr-2" />
+        <div class="font-bold text-lg"><span style="color:#4CAF50;">Ground</span>CTRL</div>
+    </div>
+    <a href="#about" class="text-gray-600 hover:text-purple-600 ml-auto">About Us</a>
+  </header>
+
+  <!-- Main Section -->
+  <main class="flex flex-col items-center justify-center h-screen text-center">
+    <h1 class="text-5xl md:text-7xl lg:text-9xl font-bold mb-4 font-['Pacifico']" style="color: #4CAF50;">
+      Ground <span style="color: black;">CTRL!</span>
+    </h1>
+    <p class="text-md text-gray-700 mt-3 md:text-3xl mb-4 italic" style="">
+      "Turning sustainability from a checkbox into a culture"
+    </p>
+    <a href="/start" style="position:absolute;bottom:5rem"class="px-8 font-bold py-3 bg-blue-600 text-white rounded-full hover:bg-green-500 transform hover:scale-105 transition-transform duration-300">
+      Let's Start!
+    </a>
+  </main>
+
+  <!-- About Section -->
+  <section id="about" class="text-center py-20">
+    <h2 class="text-3xl font-semibold text-gray-800 mb-4">About Us</h2>
+    <p class="text-gray-700 leading-relaxed text-lg px-10">
+      Our AI assistant makes housing tenders smarter and greener from the start.
+      It detects missing components, ensures compliance, analyzes carbon footprint,
+      and delivers smart suggestions. Tenders are scored on sustainability, efficiency,
+      and finance using a transparent 100-point system with visual breakdowns.
+      It explains gaps and offers interactive guidance for better, faster decisions.
+    </p>
+  </section>
+
+  <!-- Footer -->
+  <footer class="p-5 border-t border-gray-300 text-center">
+    <p class="text-gray-600">© 2025 Green Reaper. All rights reserved.</p>
+  </footer>
+</body>
+</html>

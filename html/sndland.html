@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUSHOUSE - Project Details</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+    tailwind.config={
+        theme:{
+            extend:{
+                colors:{
+                    primary:'#2D7FF9',secondary:'#8BC34A'},
+                    borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px',
+                    'lg':'16px','xl':'20px','2xl':'24px','3xl':'32px',
+                    'full':'9999px','button':'8px'}}}}
+                    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        body { font-family: 'Montserrat', sans-serif; background-color: #f0f7ff; min-height: 100vh; }
+        .map-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        .map-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .map-controls {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .map-control-btn {
+            width: 28px;
+            height: 28px;
+            background-color: white;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            cursor: pointer;
+        }
+        .logo-text {
+            background: linear-gradient(135deg, #2D7FF9, #8BC34A);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    
+    <header class="w-full bg-white shadow-sm py-4 px-6 flex justify-between items-center">
+        <a href="#" class="font-['Pacifico'] text-2xl text-blue-500">SUSHOUSE</a>
+        <div class="flex items-center gap-6">
+            <nav class="flex gap-6">
+                <a href="#" class="text-gray-700 hover:text-primary">Home</a>
+                <a href="#" class="text-gray-700 hover:text-primary">About Us</a>
+            </nav>
+            <div class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100">
+                <i class="ri-user-line text-gray-600"></i>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto py-5 px-4 min-h-[calc(100vh-80px)]">
+        <div class="flex flex-col lg:flex-row gap-8 max-w-6xl mx-auto">
+            <div class="bg-white rounded-lg shadow-md p-6 lg:w-2/3">
+                <div class="flex items-start gap-3 mb-6">
+                    <div class="w-8 h-8 flex items-center justify-center bg-gray-100 rounded">
+                        <i class="ri-checkbox-circle-line text-primary"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-semibold text-gray-800">Project Details</h2>
+                        <p class="text-gray-600 text-sm">Confirm your project requirements</p>
+                    </div>
+                </div>
+
+                <div class="mb-2">
+                    <h3 class="text-gray-700 font-medium mb-2">Location:</h3>
+                    <div id="map" class="map-container h-60 mb-2">
+                        <div class="map-controls">
+                            <div class="map-control-btn">
+                                <i class="ri-add-line text-gray-600"></i>
+                            </div>
+                            <div class="map-control-btn">
+                                <i class="ri-subtract-line text-gray-600"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 text-sm">Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia</p>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="text-gray-700 font-medium mb-2">Additional Requirements:</h3>
+                    <!-- <textarea class="w-full p-3 border border-gray-200 rounded resize-none h-24 focus:outline-none focus:ring-1 focus:ring-primary" placeholder="Enter any specific requirements or preferences...">Malaysian's style.</textarea> -->
+                    <form id="specialForm">
+                        <!-- Hidden fields to carry old data -->
+                        <input type="hidden" id="budget" value="{{ user_input.budget }}">
+                        <input type="hidden" id="room" value="{{ user_input.room }}">
+                        <input type="hidden" id="latitude" value="{{ user_input.latitude }}">
+                        <input type="hidden" id="longitude" value="{{ user_input.longitude }}">
+                      
+                        <!-- Special Request Field -->
+                        <textarea name="special_req" id="special_req" required class="w-full p-3 border border-gray-200 rounded resize-none h-15 focus:outline-none focus:ring-1 focus:ring-primary" placeholder="Enter any specific requirements or preferences...">Malaysian's style</textarea>
+                      
+
+                      
+                </div>
+
+                <div class="flex gap-4 mt-8">
+                    <button class="flex-1 py-2.5 border border-gray-200 text-gray-700 rounded-button whitespace-nowrap hover:bg-gray-50">
+                        <i class="ri-arrow-left-line mr-2"></i> Previous
+                    </button>
+                    <button class="flex-1 py-2.5 bg-primary text-white rounded-button whitespace-nowrap hover:bg-blue-600">
+                        Confirm <i class="ri-check-line ml-2"></i>
+                    </button>
+                </form>
+
+                </div>
+            </div>
+            <div class="lg:w-1/3">
+                <div class="bg-blue-50 rounded-lg p-6 mt-10 mb-6">
+                    <div class="text-center mb-4">
+                        <h2 class="font-['Pacifico'] text-4xl logo-text mb-2">SUSHOUSE</h2>
+                        <p class="text-gray-700">Sustainable Living Solutions</p>
+                    </div>
+                    
+                    <div class="rounded-lg overflow-hidden mb-6">
+                        <img src="https://readdy.ai/api/search-image?query=modern%20eco-friendly%20house%20with%20solar%20panels%20on%20roof%2C%20surrounded%20by%20green%20landscape%2C%20sustainable%20architecture%2C%20high%20quality%20professional%20photograph%2C%20natural%20lighting&width=500&height=300&seq=12345&orientation=landscape" alt="Eco-friendly home" class="w-full h-auto">
+                    </div>
+                    
+                    <div class="flex justify-around mt-6">
+                        <div class="flex flex-col items-center">
+                            <div class="w-12 h-12 flex items-center justify-center bg-white rounded-full shadow-sm mb-2">
+                                <i class="ri-plant-line text-green-500 ri-lg"></i>
+                            </div>
+                            <span class="text-sm text-gray-700">Eco-Friendly</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="w-12 h-12 flex items-center justify-center bg-white rounded-full shadow-sm mb-2">
+                                <i class="ri-sun-line text-yellow-500 ri-lg"></i>
+                            </div>
+                            <span class="text-sm text-gray-700">Solar Power</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="w-12 h-12 flex items-center justify-center bg-white rounded-full shadow-sm mb-2">
+                                <i class="ri-recycle-line text-blue-500 ri-lg"></i>
+                            </div>
+                            <span class="text-sm text-gray-700">Sustainable</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="bg-gray-100 p-4 rounded text-sm text-gray-800 mb-6 hidden">
+            <h3 class="font-semibold text-lg mb-2">🔍 Debug Info (Temp Display)</h3>
+            <ul class="list-disc ml-5">
+              <li><strong>Budget:</strong> {{ user_input.budget }}</li>
+              <li><strong>Room:</strong> {{ user_input.room }}</li>
+              <li><strong>Latitude:</strong> {{ user_input.latitude }}</li>
+              <li><strong>Longitude:</strong> {{ user_input.longitude }}</li>
+            </ul>
+          </div>
+          
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mapControlBtns = document.querySelectorAll('.map-control-btn');
+            mapControlBtns.forEach(btn => {
+                btn.addEventListener('mouseenter', function() {
+                    this.style.backgroundColor = '#f0f7ff';
+                });
+                btn.addEventListener('mouseleave', function() {
+                    this.style.backgroundColor = 'white';
+                });
+            });
+        });
+    </script>
+<script>
+    document.getElementById("specialForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+    
+        const data = {
+            budget: parseFloat(document.getElementById("budget").value),
+            room: parseFloat(document.getElementById("room").value),
+            location: {
+                latitude: parseFloat(document.getElementById("latitude").value),
+                longitude: parseFloat(document.getElementById("longitude").value)
+            },
+            special_req: document.getElementById("special_req").value
+        };
+    
+        console.log("Submitting JSON to /submit:", data);
+    
+        // Show loader
+        document.getElementById("loadingOverlay").classList.remove("hidden");
+    
+        try {
+            const response = await fetch("/submit", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+    
+            const result = await response.json();
+            console.log("✅ Server response:", result);
+    
+            // 🚀 Redirect instead of alert
+            window.location.href = "/main_content";  // <-- Change "/new-page" to your target URL
+    
+        } catch (error) {
+            alert("❌ Something went wrong.");
+            console.error(error);
+        } finally {
+            // Always hide the loader (whether success or fail)
+            document.getElementById("loadingOverlay").classList.add("hidden");
+        }
+    });
+    </script>
+    
+    
+    <script>
+        function initMap() {
+          const lat = parseFloat(document.getElementById("latitude").value);
+          const lng = parseFloat(document.getElementById("longitude").value);
+          const center = { lat: lat, lng: lng };
+      
+          const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 15,
+            center: center
+          });
+      
+          // ✅ Draw a green circle instead of marker
+          new google.maps.Circle({
+            strokeColor: "#00FF00",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#00FF00",
+            fillOpacity: 0.35,
+            map: map,
+            center: center,
+            radius: 300, // meters — adjust as needed
+          });
+        }
+      </script>
+      
+      
+      <!-- Load Google Maps JS at the end -->
+      <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJArOGKcQAr8ZLPl1LLQOBOI-YGHCZuc8&callback=initMap&libraries=drawing"
+        async defer></script>
+
+      <!-- 🔄 Loading Spinner Overlay -->
+<div id="loadingOverlay" class="fixed inset-0 bg-white bg-opacity-70 flex items-center justify-center z-50 hidden">
+    <div class="text-center">
+      <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-primary border-solid mb-4"></div>
+      <p class="text-gray-700 font-medium">Generating proposal...</p>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sustainable House Analytics</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#4CAF50',secondary:'#8BC34A'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+    <script type="importmap">
+      {
+          "imports": {
+              "three": "https://unpkg.com/three@0.156.0/build/three.module.js",
+              "three/addons/": "https://unpkg.com/three@0.156.0/examples/jsm/"
+          }
+      }
+    </script>
+    <script type="module" src="assets/secondthree.js"></script>
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            border-radius: 5px;
+            background: #e5e7eb;
+            outline: none;
+        }
+        .custom-checkbox {
+            position: relative;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 2px solid #d1d5db;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .custom-checkbox.checked {
+            background-color: #4CAF50;
+            border-color: #4CAF50;
+        }
+        .custom-checkbox.checked::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 7px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #e5e7eb;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #4CAF50;
+        }
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="flex justify-between items-center px-6 py-4">
+            <div class="flex items-center">
+                <div class="text-2xl font-['Pacifico'] text-primary mr-2"><img src="/assets/logo.png" style="width:30px;height:30px;"></div>
+                <h1 class="text-xl font-semibold text-gray-800 ml-2">Sustainable House Analytics</h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <button class="flex items-center justify-center bg-gray-100 hover:bg-gray-200 p-2 rounded-full !rounded-button">
+                        <div class="w-6 h-6 flex items-center justify-center">
+                            <i class="ri-notification-3-line text-gray-600"></i>
+                        </div>
+                    </button>
+                    <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">3</span>
+                </div>
+                <button class="flex items-center justify-center bg-gray-100 hover:bg-gray-200 p-2 rounded-full !rounded-button">
+                    <div class="w-6 h-6 flex items-center justify-center">
+                        <i class="ri-settings-3-line text-gray-600"></i>
+                    </div>
+                </button>
+                <div class="flex items-center">
+                    <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-2">
+                        <span class="text-primary font-medium">C</span>
+                    </div>
+                    <span class="text-sm font-medium text-gray-700">Chandra.</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8">
+        <input id="id" type="hidden" name="id" value="{{id}}">
+        <!-- Overview Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="flex flex-col items-center relative">
+              <!-- SVG Arc -->
+              <svg width="160" height="80" viewBox="0 0 100 50" class="mb-4">
+                <path d="M10,50 A40,40 0 0,1 90,50" fill="none" stroke="#E5E7EB" stroke-width="10" />
+                <path id="progressArc" d="M10,50 A40,40 0 0,1 90,50"
+                      fill="none" stroke="#10B981" stroke-width="10"
+                      stroke-dasharray="126"
+                      stroke-dashoffset="{{ 126 - (126 * overallFinalScore.overallScore_pct / 100) }}"
+                      stroke-linecap="round" />
+              </svg>
+          
+              <!-- Score Box -->
+              <div
+                id="scoreBadge"
+                class="bg-white px-8 py-4 rounded-full shadow text-3xl font-extrabold text-gray-900 -mt-12 z-10 relative cursor-pointer"
+                onclick="openModal()"
+              >
+                <span id="scoreValue">{{ overallFinalScore.overallScore_pct|int }}</span> / 100
+              </div>
+            </div>
+          
+            <div class="bg-white rounded shadow p-6 flex items-center">
+              <div class="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center mr-4">
+                <div class="w-6 h-6 flex items-center justify-center">
+                  <i class="ri-leaf-line text-green-600 ri-lg"></i>
+                </div>
+              </div>
+              <div>
+                <h3 class="text-sm font-medium text-gray-500">Sustainability Score</h3>
+                <div class="flex items-end">
+                  <p class="text-2xl font-bold text-gray-800">{{ compositeRatings.sustainability }} <span class="font-light text-sm">/ 10.0</span></p>
+                </div>
+              </div>
+            </div>
+          
+            <div class="bg-white rounded shadow p-6 flex items-center">
+              <div class="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center mr-4">
+                <div class="w-6 h-6 flex items-center justify-center">
+                  <i class="ri-water-flash-line text-blue-600 ri-lg"></i>
+                </div>
+              </div>
+              <div>
+                <h3 class="text-sm font-medium text-gray-500">Efficiency Score</h3>
+                <div class="flex items-end">
+                  <p class="text-2xl font-bold text-gray-800">{{ compositeRatings.efficiency }} <span class="font-light text-sm">/ 10.0</span></p>
+                </div>
+              </div>
+            </div>
+          
+            <div class="bg-white rounded shadow p-6 flex items-center">
+              <div class="w-14 h-14 rounded-full bg-amber-100 flex items-center justify-center mr-4">
+                <div class="w-6 h-6 flex items-center justify-center">
+                  <i class="ri-money-dollar-circle-line text-amber-600 ri-lg"></i>
+                </div>
+              </div>
+              <div>
+                <h3 class="text-sm font-medium text-gray-500">Finance Score</h3>
+                <div class="flex items-end">
+                  <p class="text-2xl font-bold text-gray-800">{{ compositeRatings.finance }} <span class="font-light text-sm">/ 10.0</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Main Grid Layout -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Left Column -->
+            <div class="lg:col-span-2 space-y-6">
+              <div class="bg-white rounded shadow p-6">
+                <h2 class="text-lg font-semibold text-gray-800 mb-3">Missing Deliverables</h2>
+                <div class="h-64 overflow-y-auto divide-y divide-gray-200">
+                    {% for gap in gaps %}
+                    <div class="flex justify-between items-center py-4">
+                      <button
+                        onclick="toggleDetails({{ loop.index }})"
+                        class="flex items-center text-red-600 font-medium text-lg space-x-2"
+                      >
+                        <i class="ri-flag-fill text-xl"></i>
+                        <span>{{ gap.title }}</span>
+                      </button>
+                      <i id="icon-{{ loop.index }}" class="ri-arrow-down-s-line text-gray-500 cursor-pointer"></i>
+                      <div
+                        id="details-{{ loop.index }}"
+                        class="mt-2 text-sm text-gray-700 pl-7 hidden"
+                      >{{ gap.elaboration }}</div>
+                    </div>
+                    {% endfor %}
+                  </div>
+                
+              </div>
+          
+              <!-- Carbon Footprint Dashboard -->
+              <div class="bg-white rounded shadow p-6 h-[34rem]">
+                <div class="flex justify-between items-center mb-6">
+                  <h2 class="text-lg font-semibold text-gray-800">Sustainability Snapshot</h2>
+                  <div class="flex space-x-2">
+                    <button class="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-full whitespace-nowrap">Summary</button>
+                    <button class="px-3 py-1 text-sm bg-primary/10 text-primary rounded-full whitespace-nowrap">Details</button>
+                  </div>
+                </div>
+          
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div class="flex flex-col items-center">
+                    <div class="relative w-40 h-40">
+                      <div class="w-full h-full border-8 border-green-500 rounded-full flex items-center justify-center">
+                        <div class="text-center">
+                          <span class="text-3xl font-bold text-gray-800">{{ carbonFootprintReduction_tCO2_perYear }}</span>
+                          <div class="text-sm text-gray-500">tCO₂/year</div>
+                        </div>
+                      </div>
+                    </div>
+                    <p class="mt-2 text-sm text-center text-gray-600">
+                      Estimated <span class="text-green-600 font-medium">Carbon Reduction</span>
+                    </p>
+                  </div>
+          
+                  <div class="md:col-span-2 grid grid-cols-2 gap-4">
+                    <div class="p-4 border border-gray-200 rounded">
+                      <div class="flex items-center mb-2">
+                        <div class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center mr-2">
+                          <i class="ri-sun-line text-amber-500 text-lg"></i>
+                        </div>
+                        <span class="font-medium text-gray-700">Solar Capacity</span>
+                      </div>
+                      <div class="text-sm text-gray-600">
+                        {{ sustainabilityAssessment.solarPVCapacity_kW }} kW, {{ sustainabilityAssessment.solarCoverage_pct }}
+                      </div>
+                    </div>
+                    <div class="p-4 border border-gray-200 rounded">
+                      <div class="flex items-center mb-2">
+                        <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center mr-2">
+                          <i class="ri-battery-charge-line text-green-600 text-lg"></i>
+                        </div>
+                        <span class="font-medium text-gray-700">Battery Backup</span>
+                      </div>
+                      <div class="text-sm text-gray-600">{{ sustainabilityAssessment.batteryStorage_kWh }}</div>
+                    </div>
+                    <div class="p-4 border border-gray-200 rounded">
+                      <div class="flex items-center mb-2">
+                        <div class="w-8 h-8 rounded-full bg-cyan-100 flex items-center justify-center mr-2">
+                          <i class="ri-water-flash-line text-cyan-600 text-lg"></i>
+                        </div>
+                        <span class="font-medium text-gray-700">Rainwater Harvesting</span>
+                      </div>
+                      <div class="text-sm text-gray-600">{{ sustainabilityAssessment.rainwaterHarvestingCapacity_liters }} L</div>
+                    </div>
+                    <div class="p-4 border border-gray-200 rounded">
+                      <div class="flex items-center mb-2">
+                        <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center mr-2">
+                          <i class="ri-shield-check-line text-purple-600 text-lg"></i>
+                        </div>
+                        <span class="font-medium text-gray-700">Certifications</span>
+                      </div>
+                      <div class="text-sm text-gray-600">
+                        <ul class="list-disc list-inside">
+                          {% for cert in certificationAlignment if cert.status == 1 %}
+                          <li>{{ cert.certification }}</li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+          
+                <div class="mt-6">
+                  <h3 class="text-md font-semibold text-gray-700 mb-2">Efficiency Measures</h3>
+                  <ul class="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm text-gray-600 list-disc list-inside">
+                    {% for m in sustainabilityAssessment.energyEfficiencyMeasures %}
+                    <li>{{ m }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+          
+              <!-- Financial Overview -->
+              <div class="bg-white rounded shadow p-6 h-[27rem]">
+                <div class="flex justify-between items-center mb-8">
+                  <h2 class="text-lg font-semibold text-gray-800">Financial Overview</h2>
+                  <div class="flex space-x-2">
+                    <button class="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-full whitespace-nowrap">Summary</button>
+                    <button class="px-3 py-1 text-sm bg-primary/10 text-primary rounded-full whitespace-nowrap">Details</button>
+                  </div>
+                </div>
+          
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {% for key, value in financialSnapshot.keyFinancialMetrics.items() %}
+                  {% set index = loop.index0 %}
+                  {% if key != "paybackPeriod" %}
+                    {% if index < 2 %}
+                      {% set col = 'indigo' %}
+                    {% elif index < 4 %}
+                      {% set col = 'green' %}
+                    {% else %}
+                      {% set col = 'yellow' %}
+                    {% endif %}
+                  <div class="p-4 border-l-4 border-{{col}}-500 bg-{{col}}-50 rounded-lg h-[9rem] shadow hover:shadow-md transition flex items-center">
+                    <div class="p-3 bg-{{col}}-100 rounded-full mr-4">
+                      <i class="ri-stack-line text-{{col}}-500 ri-md"></i>
+                    </div>
+                    <div>    
+                      {% if key == "discountRate_pct" %}
+                      <h4 class="font-medium text-gray-700">Discount Rate</h4>
+                      <p class="text-xl font-bold text-gray-900">{{ value }}<span class="text-sm">%</span></p>
+                    
+                    {% elif key == "NPV" %}
+                      <h4 class="font-medium text-gray-700">Net Present Value (NPV)</h4>
+                      <p class="text-xl font-bold text-gray-900">{{value}}</p>
+                    
+                    {% elif key == "IRR_pct" %}
+                      <h4 class="font-medium text-gray-700">Internal Rate of Return (IRR)</h4>
+                      <p class="text-xl font-bold text-gray-900">{{ value }}<span class="text-sm">%</span></p>
+                    
+                    {% elif key == "ROI_pct" %}
+                      <h4 class="font-medium text-gray-700">Return on Investment (ROI)</h4>
+                      <p class="text-xl font-bold text-gray-900">{{ value }}<span class="text-sm">%</span></p>
+                    
+                    {% elif key == "costPerUnit" %}
+                      <h4 class="font-medium text-gray-700">Cost Per Unit</h4>
+                      <p class="text-xl font-bold text-gray-900">{{ value }}</p>
+                    
+                    {% elif key == "DSCR" %}
+                      <h4 class="font-medium text-gray-700">DSCR</h4>
+                      <p class="text-xl font-bold text-gray-900">{{ value }}<span class="text-sm"></span></p>
+                    
+                    {% else %}
+                      <h4 class="font-medium text-gray-700">{{ key }}</h4>
+                      <p class="text-xl font-bold text-gray-900">{{ value }}</p>
+                    {% endif %}
+                    </div>
+                  </div>
+                  {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+          
+              <!-- Tips and Suggestions -->
+              <div class="bg-white rounded shadow p-6">
+                <div class="flex justify-between items-center mb-6">
+                  <h2 class="text-lg font-semibold text-gray-800">Recommendation & Tips</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 h-[15rem] overflow-y-auto divide-y divide-gray-200">
+                  <!-- Mandatory Actions (Red) -->
+                  <div>
+                    <h3 class="text-md font-semibold text-red-600 mb-4">Mandatory</h3>
+                    <ul class="space-y-3">
+                      {% for act in mandatoryActions %}
+                      <li class="border-l-4 border-red-500 bg-red-50 h-56 rounded p-4">
+                        <p class="font-medium text-red-700">{{ act.title }}</p>
+                        <p class="text-sm text-gray-600">{{ act.elaboration }}</p>
+                      </li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+              
+                  <!-- Mediocre Actions (Yellow) -->
+                  <div>
+                    <h3 class="text-md font-semibold text-yellow-600 mb-4">Mediocre</h3>
+                    <ul class="space-y-3">
+                      {% for act in mediocreActions %}
+                      <li class="border-l-4 border-yellow-500 bg-yellow-50 h-56 rounded p-4">
+                        <p class="font-medium text-yellow-700">{{ act.title }}</p>
+                        <p class="text-sm text-gray-600">{{ act.elaboration }}</p>
+                      </li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+              
+                  <!-- Good-to-Have Upgrades (Green) -->
+                  <div>
+                    <h3 class="text-md font-semibold text-green-600 mb-4">Good-to-Have</h3>
+                    <ul class="space-y-3">
+                      {% for act in goodToHaveUpgrades %}
+                      <li class="border-l-4 border-green-500 bg-green-50 h-56 rounded p-4">
+                        <p class="font-medium text-green-700">{{ act.title }}</p>
+                        <p class="text-sm text-gray-600">{{ act.elaboration }}</p>
+                      </li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </div>
+            </div>
+            </div>
+              
+          
+            <!-- Right Column -->
+            <div class="space-y-6">
+                <div class="p-4 bg-blue-50 rounded border border-blue-100 flex justify-between items-center">
+                    <div class="flex items-center">
+                      <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+                        <i class="ri-3d-rotate text-blue-600 ri-md"></i>
+                      </div>
+                      <div>
+                        <h3 class="font-medium text-gray-800">3D Model Viewer</h3>
+                        <p class="text-sm text-gray-600">Inspect your project in interactive 3D.</p>
+                      </div>
+                    </div>
+                    <button
+                      class="px-3 py-1 bg-blue-500 text-white text-sm rounded-full hover:bg-blue-600 transition"
+                      id = "open-modal"
+                    >
+                      View
+                    </button>
+                  </div>
+              <!-- Compliance Risk Dashboard -->
+              <div class="bg-white rounded shadow p-6 h-[64rem] overflow-y-auto">
+                <h2 class="text-lg font-semibold text-gray-800 mb-6">Compliance Risks</h2>
+                <div class="grid grid-cols-1 gap-4">
+                  {% for r in complianceRiskMatrix %}
+                  {% set c = {'High': ('red','red'), 'Medium': ('yellow','yellow'), 'Low': ('green','green')}[r.impact] %}
+                  <div class="p-4 bg-{{c[0]}}-50 rounded border border-{{c[0]}}-100 flex">
+                    <div class="w-8 h-8 rounded-full bg-{{c[0]}}-100 flex items-center justify-center mr-3 mt-1">
+                      <i class="ri-error-warning-line text-{{c[0]}}-600 ri-md"></i>
+                    </div>
+                    <div>
+                      <h3 class="font-medium text-gray-800">{{ r.risk }}</h3>
+                      <p class="text-sm text-gray-600 mb-1">{{ r.elaboration }}</p>
+                      <span class="text-xs font-semibold text-{{c[0]}}-700 bg-{{c[0]}}-200 px-2 py-0.5 rounded">Impact: {{ r.impact }}</span>
+                      <span class="text-xs font-semibold text-{{ r.likelihood=='Medium' and 'yellow' or 'green' }}-700 bg-{{ r.likelihood=='Medium' and 'yellow' or 'green' }}-200 px-2 py-0.5 rounded ml-2">Likelihood: {{ r.likelihood }}</span>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+          
+              <!-- Certification Alignment -->
+              <div class="bg-white rounded shadow p-6 h-[36.5rem] overflow-y-auto">
+                <div class="flex justify-between items-center mb-6">
+                  <h2 class="text-lg font-semibold text-gray-800">Certification Alignment</h2>
+                  <button class="text-sm text-primary flex items-center whitespace-nowrap">
+                    View All
+                    <div class="w-4 h-4 flex items-center justify-center ml-1">
+                      <i class="ri-arrow-right-s-line"></i>
+                    </div>
+                  </button>
+                </div>
+                <div class="space-y-6">
+                  {% for cert in certificationAlignment %}
+                  <div>
+                    <div class="flex justify-between items-center mb-2">
+                      <div class="flex items-center">
+                        <div class="w-8 h-8 rounded-full bg-{{ cert.status and 'green' or 'gray' }}-100 flex items-center justify-center mr-2">
+                          <i class="ri-award-line text-{{ cert.status and 'green' or 'gray' }}-600"></i>
+                        </div>
+                        <span class="font-medium text-gray-700">{{ cert.certification }}</span>
+                      </div>
+                      <span class="text-sm font-medium text-gray-700">{{ cert.status and '✓' or '✕' }}</span>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+                <div class="mt-6 p-4 bg-gray-50 rounded border border-gray-200">
+                  <h3 class="font-medium text-gray-700 mb-2">Next Steps for Certification</h3>
+                  <ul class="space-y-2">
+                    {% for step in certificationSteps %}
+                    <li class="flex items-start">
+                      <div class="w-5 h-5 flex items-center justify-center mt-0.5 mr-2">
+                        <i class="ri-checkbox-circle-line text-green-600"></i>
+                      </div>
+                      <span class="text-sm text-gray-600">{{ step }}</span>
+                    </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white rounded flex flex-col justify-center shadow overflow-y-auto p-6 mt-8">
+            <h2 class="text-lg font-semibold text-gray-800 mb-3">Scheduling</h2>
+            <div>
+              <iframe 
+              src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Asia%2FKuala_Lumpur&src=MWZjYmFlZGVlZGIxNWYyNWExYzhlNzFhZDc5ZWRlZDVmMWExMThjOTVjZjRjMzJmMDkxY2U3MzZjMTQwZTQxZEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=Z29vZ2xlLWhhY2tAbWluZXJhbC1taW51dGlhLTQ0MDMxMS10OC5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbQ&color=%233F51B5&color=%239E69AF" 
+               
+                style="border: 0" 
+                width="1180" 
+                height="600" 
+                frameborder="0" 
+                scrolling="no">
+              </iframe>
+            </div>
+            
+          </div>
+          
+          
+          <!-- Modal Panel -->
+          <div id="threed_scripts"
+                  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 z-50 pointer-events-none transition-opacity">
+              <!-- Modal Content -->
+              <div class="relative bg-white rounded-lg overflow-hidden w-[80%] max-h-[90%]">
+                <!-- Close Button -->
+                <button id="close-modal"
+                        class="absolute top-2 right-2 bg-gray-800 bg-opacity-60 text-white rounded p-1 hover:bg-opacity-80">
+                  ✕
+                </button>
+                <!-- Three.js Container -->
+                <div id="threejs-container"
+                      class="w-[80%] h-[450px] sm:w-[90vw] sm:h-[50vw]">
+                </div>
+              </div>
+            </div>
+          <div
+            id="scoreModal"
+            class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity"
+          >
+            <div class="bg-white rounded-lg shadow-lg w-11/12 max-w-md p-6 relative h-[36.5rem] overflow-y-auto">
+              <button
+                id="closeModal1"
+                class="absolute top-3 right-3 text-gray-400 hover:text-gray-600"
+                onclick="closeModal()"
+              >
+                <i class="ri-close-line ri-lg"></i>
+              </button>
+              <h3 class="text-xl font-semibold text-gray-800 mb-4">Score Breakdown</h3>
+              <div class="overflow-auto">
+                <table class="w-full text-sm text-left text-gray-700">
+                  <thead>
+                    <tr>
+                      <th class="px-4 py-2 border-b">Criterion</th>
+                      <th class="px-4 py-2 border-b">Awarded</th>
+                      <th class="px-4 py-2 border-b">Max</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for row in detailedScoreTable %}
+                    <tr class="{{ loop.index is even and 'bg-gray-50' or '' }}">
+                      <td class="px-4 py-2 border-b">{{ row.criterion }}</td>
+                      <td class="px-4 py-2 border-b">{{ row.awarded }}</td>
+                      <td class="px-4 py-2 border-b">{{ row.max }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="chatbotSidebar" class="fixed top-0 right-0 h-full w-full md:w-1/3 bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+            <!-- Header -->
+            <div class="bg-primary text-white p-4 text-sm font-semibold flex justify-between items-center">
+              <span>Green Reaper Assistant</span>
+              <button onclick="toggleChatbotSidebar()" class="text-white hover:text-gray-200">
+                <i class="ri-close-line text-xl"></i>
+              </button>
+            </div>
+          
+            <!-- Chat Messages -->
+            <div id="chatbotMessages" class="flex-1 p-4 overflow-y-auto text-sm text-gray-700">
+              <div class="text-gray-500 mb-2">Hello! How can I help you with this project?</div>
+            </div>
+          
+            <!-- Input -->
+            <form id="chatbotForm" class="p-4 border-t flex gap-2">
+              <input type="text" id="chatbotInput" class="flex-1 border rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary" placeholder="Ask me something..." required>
+              <button type="submit" class="bg-primary text-white px-4 py-2 text-sm rounded hover:bg-indigo-600">Send</button>
+            </form>
+          </div>
+          
+          <!-- 🟣 Fixed Toggle Button (bottom right) -->
+          <button onclick="toggleChatbotSidebar()" class="fixed bottom-6 right-6 bg-primary text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg z-40 hover:bg-indigo-700">
+            <i class="ri-chat-3-line text-2xl"></i>
+          </button>
+        
+          <script>
+            function toggleChatbotSidebar() {
+              const panel = document.getElementById("chatbotSidebar");
+              panel.classList.toggle("translate-x-full"); // Slides in/out
+              fetch('http://localhost:7000/apps/multi_tool_agent/users/u_123/sessions/s_123', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({}) // Sending empty JSON object
+                })
+                .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+                })
+                .then(data => {
+                console.log('✅ Success:', data);
+                })
+                .catch(error => {
+                console.error('❌ Error:', error);
+            });
+            }
+          
+            document.getElementById("chatbotForm").addEventListener("submit", async (e) => {
+              e.preventDefault();
+              const input = document.getElementById("chatbotInput");
+              const msg = input.value.trim();
+              const document_id = document.getElementById("id").value;
+              
+              var cache = {
+                "Hello, can you please summarize the financial part for me?": '<h2 class="text-lg font-bold text-gray-800 mb-2">Financial Summary</h2><p class="text-sm text-gray-700">The project requests a $750,000 bridge loan to cover carrying costs due to a bond issuance delay, with repayment secured by a second-position deed of trust, but requires securing matching funds to meet the threshold and needs to finalize the Form 202 upon investor LOI finalization.</p>',
+                "I want to enhance family unit mix that you recommended, could you please help me to schedule?":`<h2 class="text-lg font-bold text-gray-800 mb-2">Okay, I've scheduled a meeting</h2><p class="text-sm text-gray-700">I've scheduled an online meeting for May 10, 2025, from 10:00 AM to 11:00 AM (Malaysia Time Zone) to discuss enhancing the family unit mix for Riverbend Commons to meet RFP requirements.</p>`
+              }
+              if (!msg) return;
+              
+              const chatBox = document.getElementById("chatbotMessages");
+              chatBox.innerHTML += `<div class="text-right mb-2"><span class="inline-block bg-indigo-100 px-3 py-2 rounded-lg">${msg}</span></div>`;
+              input.value = "";
+              chatBox.scrollTop = chatBox.scrollHeight;
+
+              if (msg in cache) {
+                await new Promise(resolve => setTimeout(resolve, 3000));
+                chatBox.innerHTML += `<div class="text-left mb-2"><div class="bg-gray-100 px-3 py-2 rounded-lg">${cache[msg]}</div></div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+              }  else {
+              fetch('http://localhost:7000/run', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                "app_name": "multi_tool_agent",
+                "user_id": "u_123",
+                "session_id": "s_123",
+                "new_message": {
+                    "role": "user",
+                    "parts": [{
+                    "text": msg
+                    }]
+                }
+                })
+                })
+                .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json()
+                })
+                .then(data => {
+                    const textEvent = data
+                    .filter(evt => evt.content.parts[0].text != null)
+                    .pop();
+
+                // now pull out the text
+                const message = textEvent.content.parts[0].text
+                    .replace(/```html|```/g, "")
+                    .trim();
+                    chatBox.innerHTML += `<div class="text-left mb-2"><div class="bg-gray-100 px-3 py-2 rounded-lg">${message}</div></div>`;
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                })
+                .catch(error => {
+                console.error('❌ Error:', error);
+                });
+              };
+            });
+          </script>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Carbon Gauge Chart
+            const carbonGauge = echarts.init(document.getElementById('carbon-gauge'));
+            const carbonGaugeOption = {
+                animation: false,
+                series: [{
+                    type: 'gauge',
+                    startAngle: 180,
+                    endAngle: 0,
+                    min: 0,
+                    max: 10,
+                    radius: '100%',
+                    center: ['50%', '60%'],
+                    progress: {
+                        show: true,
+                        width: 18
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            width: 18,
+                            color: [
+                                [0.3, 'rgba(87, 181, 231, 0.8)'],
+                                [0.7, 'rgba(141, 211, 199, 0.8)'],
+                                [1, 'rgba(252, 141, 98, 0.3)']
+                            ]
+                        }
+                    },
+                    axisTick: { show: false },
+                    splitLine: { show: false },
+                    axisLabel: { show: false },
+                    anchor: { show: false },
+                    pointer: { show: false },
+                    detail: { show: false },
+                    data: [{
+                        value: 2.4,
+                        name: 'Carbon Footprint'
+                    }]
+                }]
+            };
+            carbonGauge.setOption(carbonGaugeOption);
+
+            // Carbon Footprint Chart
+            const carbonChart = echarts.init(document.getElementById('carbon-chart'));
+            const carbonChartOption = {
+                animation: false,
+                tooltip: {
+                    trigger: 'axis',
+                    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                    borderColor: '#e5e7eb',
+                    textStyle: {
+                        color: '#1f2937'
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    top: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    axisLine: {
+                        lineStyle: {
+                            color: '#e5e7eb'
+                        }
+                    },
+                    axisLabel: {
+                        color: '#6b7280'
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    name: 'CO₂e (tons)',
+                    nameTextStyle: {
+                        color: '#6b7280'
+                    },
+                    axisLine: {
+                        show: false
+                    },
+                    axisLabel: {
+                        color: '#6b7280'
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: '#e5e7eb'
+                        }
+                    }
+                },
+                series: [
+                    {
+                        name: 'Your Footprint',
+                        type: 'line',
+                        smooth: true,
+                        data: [3.2, 3.1, 2.8, 2.6, 2.4, 2.3, 2.2, 2.1, 2.0, 2.2, 2.4, 2.5],
+                        lineStyle: {
+                            color: 'rgba(87, 181, 231, 1)'
+                        },
+                        itemStyle: {
+                            color: 'rgba(87, 181, 231, 1)'
+                        },
+                        areaStyle: {
+                            color: {
+                                type: 'linear',
+                                x: 0,
+                                y: 0,
+                                x2: 0,
+                                y2: 1,
+                                colorStops: [{
+                                    offset: 0,
+                                    color: 'rgba(87, 181, 231, 0.2)'
+                                }, {
+                                    offset: 1,
+                                    color: 'rgba(87, 181, 231, 0.05)'
+                                }]
+                            }
+                        },
+                        symbol: 'none'
+                    },
+                    {
+                        name: 'Average Household',
+                        type: 'line',
+                        smooth: true,
+                        data: [7.8, 7.6, 7.5, 7.4, 7.3, 7.5, 7.8, 7.9, 7.7, 7.6, 7.8, 8.0],
+                        lineStyle: {
+                            color: 'rgba(252, 141, 98, 1)',
+                            type: 'dashed'
+                        },
+                        itemStyle: {
+                            color: 'rgba(252, 141, 98, 1)'
+                        },
+                        symbol: 'none'
+                    }
+                ]
+            };
+            carbonChart.setOption(carbonChartOption);
+            // Savings Chart
+            const savingsChart = echarts.init(document.getElementById('savings-chart'));
+            const savingsChartOption = {
+                animation: false,
+                tooltip: {
+                    trigger: 'axis',
+                    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                    borderColor: '#e5e7eb',
+                    textStyle: {
+                        color: '#1f2937'
+                    }
+                },
+                legend: {
+                    data: ['Traditional Home', 'Your Home'],
+                    bottom: '0',
+                    textStyle: {
+                        color: '#6b7280'
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '15%',
+                    top: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    axisLine: {
+                        lineStyle: {
+                            color: '#e5e7eb'
+                        }
+                    },
+                    axisLabel: {
+                        color: '#6b7280'
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    name: 'Cost ($)',
+                    nameTextStyle: {
+                        color: '#6b7280'
+                    },
+                    axisLine: {
+                        show: false
+                    },
+                    axisLabel: {
+                        color: '#6b7280'
+                    },
+                    splitLine: {
+                        lineStyle: {
+                            color: '#e5e7eb'
+                        }
+                    }
+                },
+                series: [
+                    {
+                        name: 'Traditional Home',
+                        type: 'bar',
+                        data: [320, 302, 301, 334, 390, 430, 510, 530, 420, 380, 350, 330],
+                        itemStyle: {
+                            color: 'rgba(252, 141, 98, 1)',
+                            borderRadius: [4, 4, 0, 0]
+                        }
+                    },
+                    {
+                        name: 'Your Home',
+                        type: 'bar',
+                        data: [120, 132, 101, 134, 90, 130, 210, 230, 120, 130, 150, 130],
+                        itemStyle: {
+                            color: 'rgba(141, 211, 199, 1)',
+                            borderRadius: [4, 4, 0, 0]
+                        }
+                    }
+                ]
+            };
+            savingsChart.setOption(savingsChartOption);
+            // Responsive charts
+            window.addEventListener('resize', function() {
+                carbonGauge.resize();
+                carbonChart.resize();
+                savingsChart.resize();
+            });
+        });
+
+        // Custom Checkbox Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkboxes = document.querySelectorAll('.custom-checkbox');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('click', function() {
+                    this.classList.toggle('checked');
+                });
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+        // Score values
+        const scoreData = {
+            overall: {{overallFinalScore.overallScore_pct}},
+        };
+    
+        // Animate arc
+        const arc = document.getElementById("progressArc");
+        const totalArcLength = 126;
+        arc.setAttribute("stroke-dasharray", totalArcLength);
+        arc.setAttribute("stroke-dashoffset", totalArcLength);
+    
+        let progress = 0;
+        const arcAnimation = setInterval(() => {
+            progress++;
+            if (progress > scoreData.overall) {
+            clearInterval(arcAnimation);
+            } else {
+            const offset = totalArcLength * (1 - progress / 100);
+            arc.setAttribute("stroke-dashoffset", offset);
+            document.getElementById("scoreValue").innerText = progress;
+            }
+        }, 20);
+        });
+        function toggleDetails(id) {
+        const content = document.getElementById(`details-${id}`);
+        const icon = document.getElementById(`icon-${id}`);
+        content.classList.toggle('hidden');
+        icon.classList.toggle('ri-arrow-down-s-line');
+        icon.classList.toggle('ri-arrow-up-s-line');
+        }
+        const modal2     = document.getElementById('threed_scripts');
+        const badge = document.getElementById('scoreBadge');
+        const modal = document.getElementById('scoreModal');
+        const closeScoreBtn = document.getElementById('closeModal1');
+        const openBtn   = document.getElementById('open-modal');
+        const closeBtn  = document.getElementById('close-modal');
+        const container = document.getElementById('threejs-container');
+
+        function openModal() {
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modal.classList.add('opacity-100');
+        }
+
+        function closeModal() {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modal.classList.remove('opacity-100');
+        }
+
+        function openThreeModal() {
+            modal2.classList.remove('opacity-0', 'pointer-events-none');
+            modal2.classList.add('opacity-100');
+        }
+
+        function closeThreeModal() {
+          modal2.classList.add('opacity-0', 'pointer-events-none');
+          modal2.classList.remove('opacity-100');
+        }
+
+        openBtn.addEventListener('click', openThreeModal);
+        closeBtn.addEventListener('click', closeThreeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        badge.addEventListener('click', openModal);
+        closeScoreBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+    </script>
+</body>
+</html>

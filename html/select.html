@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Reaper - Sustainable Housing Project</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#4F46E5',secondary:'#10B981'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.156.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.156.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    <script type="module" src="assets/secondthree.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="assets/gantt.js"></script>
+    <style>
+        h1, h2, h3, h4, h5, h6 {
+        font-size: revert !important;
+        font-weight: revert !important;
+        }
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .scrollbar::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 10px;
+        }
+        .scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #a1a1a1;
+        }
+        .tab-active {
+            background-color: #4F46E5;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-[#f0f7ff] min-h-screen overflow-x-hidden">
+    <header class="w-full bg-white shadow-sm py-4 px-6 flex justify-between items-center">
+        <a href="#" class="font-['Pacifico'] text-2xl text-blue-500">SUS HOUSE</a>
+        <div class="flex items-center gap-6">
+        <nav class="flex gap-6">
+        <a href="#" class="text-gray-700 hover:text-primary">Home</a>
+        <a href="#" class="text-gray-700 hover:text-primary">About Us</a>
+        </nav>
+        <div class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100">
+        <i class="ri-user-line text-gray-600"></i>
+        </div>
+        </div>
+        </header>
+    <main class="max-w-7xl mx-auto px-4 py-8 flex flex-col md:flex-row gap-8">
+        <div class="w-full md:w-1/2 bg-white rounded-lg shadow-sm p-6 max-h-[560px] overflow-y-auto scrollbar">
+            <div class="flex items-start mb-6">
+                <div class="w-10 h-10 flex items-center justify-center bg-gray-100 rounded-lg mr-4">
+                    <i class="ri-file-list-line text-gray-600"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg font-semibold text-gray-800">Findings</h2>
+                    <p class="text-sm text-gray-500">Please wait 3-5 minutes for my information to compile.</p>
+                </div>
+            </div>
+
+            <h1 class="text-2xl font-bold text-gray-800 mb-2">Sustainable Housing Project Proposal</h1>
+            <p class="text-gray-600 mb-6">Budget: RM 2,000,600</p>
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold text-gray-800 mb-3">Project Overview</h3>
+                <div class="space-y-2 text-gray-700">
+                    <p><span class="font-medium">House Type</span></p>
+                    <p>Landed House (2000 sq ft)</p>
+                </div>
+            </div>
+
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold text-gray-800 mb-3">Key Features</h3>
+                <ul class="list-disc pl-5 space-y-2 text-gray-700">
+                    <li>Green roof</li>
+                    <li>Rainwater harvesting system</li>
+                    <li>Solar panels for electricity generation</li>
+                    <li>Energy-efficient windows and insulation</li>
+                    <li>Use of recycled and locally sourced materials</li>
+                    <li>Permeable paving</li>
+                    <li>Native landscaping to minimize water consumption</li>
+                </ul>
+            </div>
+
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold text-gray-800 mb-3">Exterior Design</h3>
+                <p class="text-gray-700 mb-3">
+                    The exterior will feature a combination of exposed brick (recycled), timber cladding 
+                    (sustainably sourced), and large, energy-efficient windows. The roof will be a low-pitched 
+                    green roof planted with native vegetation. A rainwater harvesting system will be 
+                    integrated into the design, feeding into a storage tank for irrigation and toilet flushing.
+                </p>
+                <p class="text-gray-700">
+                    The facade will incorporate shading elements such as overhangs and vertical louvers to 
+                    minimize solar heat gain. Permeable paving will be used for driveways and walkways to 
+                    reduce stormwater runoff.
+                </p>
+            </div>
+
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold text-gray-800 mb-3">Interior Design</h3>
+                <p class="text-gray-700 mb-3">
+                    The interior will emphasize open-plan living with flexible spaces that can be reconfigured 
+                    as needed. Natural light will be maximized through strategic window placement and skylights. 
+                    Interior walls will be constructed using eco-friendly materials such as compressed earth blocks 
+                    or recycled timber.
+                </p>
+                <p class="text-gray-700">
+                    Flooring will consist of bamboo, cork, or reclaimed wood. Low-VOC paints and finishes will be 
+                    used throughout. The kitchen will feature energy-efficient appliances and water-saving fixtures.
+                </p>
+            </div>
+
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold text-gray-800 mb-3">Energy Efficiency</h3>
+                <p class="text-gray-700 mb-3">
+                    The house will be designed to achieve a minimum 6-star energy rating. Solar panels will be 
+                    installed on the north-facing roof sections to generate electricity. A battery storage system 
+                    will be included to store excess energy for use during peak demand periods or power outages.
+                </p>
+                <p class="text-gray-700">
+                    High-performance insulation will be used in walls, floors, and ceilings to minimize heat 
+                    transfer. Windows will be double-glazed with low-e coatings and thermally broken frames.
+                </p>
+            </div>
+        </div>
+
+        <div class="w-full md:w-1/2 space-y-8">
+            <div class="bg-[#DCDCDC] rounded-lg shadow-sm p-6 mb-5">
+                <h2 class="text-xl font-semibold text-black mb-4">Images</h2>
+                <div class="grid grid-cols-3 gap-4">
+  <!-- Floor Plan Image -->
+  <div class="bg-white rounded-lg overflow-hidden">
+    <img src="/floor-plan" alt="Floor Plan" class="w-full h-full object-cover object-top" style="max-height:230px">
+  </div>
+
+  <div class="bg-white rounded-lg overflow-hidden">
+    <img src="/model-2d" alt="Floor Plan" class="w-full h-full object-cover object-top" style="max-height:230px">
+  </div>
+                    <div class="bg-white rounded-lg overflow-hidden">
+                        <img src="https://readdy.ai/api/search-image?query=3D%20rendering%20of%20a%20modern%20sustainable%20house%20exterior%20with%20green%20roof%2C%20solar%20panels%2C%20large%20windows%2C%20minimalist%20architecture%2C%20eco-friendly%20design&width=300&height=300&seq=3&orientation=squarish" alt="3D Model" class="w-full h-full object-cover object-top" style="max-height:230px">
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm p-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-6">Analysis and Projections</h2>
+                <div class="grid grid-cols-3 gap-4">
+                    <div onclick="openModal('financial')" class="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg p-4 flex flex-col items-center justify-center text-center h-40 cursor-pointer hover:shadow-md transition">
+                        <h3 class="text-amber-800 font-medium mb-2">Financial Aspects</h3>
+                        <p class="text-amber-700 text-sm">Click to view report</p>
+                    </div>
+                    <div onclick="openModal('sustainability')" class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-4 flex flex-col items-center justify-center text-center h-40 cursor-pointer hover:shadow-md transition">
+                        <h3 class="text-green-800 font-medium mb-2">Sustainability Aspects</h3>
+                        <p class="text-green-700 text-sm">Click to view report</p>
+                    </div>
+                    <div onclick="openModal('durability')" class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 flex flex-col items-center justify-center text-center h-40 cursor-pointer hover:shadow-md transition">
+                        <h3 class="text-blue-800 font-medium mb-2">Durability Aspects</h3>
+                        <p class="text-blue-700 text-sm">Click to view report</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chartDom = document.getElementById('energyChart');
+            const myChart = echarts.init(chartDom);
+            
+            const option = {
+                animation: false,
+                tooltip: {
+                    trigger: 'axis',
+                    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                    textStyle: {
+                        color: '#1f2937'
+                    }
+                },
+                legend: {
+                    data: ['Traditional Home', 'Green Reaper Home'],
+                    textStyle: {
+                        color: '#1f2937'
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    top: '15%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    axisLabel: {
+                        color: '#1f2937'
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    name: 'kWh',
+                    axisLabel: {
+                        color: '#1f2937'
+                    }
+                },
+                series: [
+                    {
+                        name: 'Traditional Home',
+                        type: 'line',
+                        smooth: true,
+                        lineStyle: {
+                            width: 2
+                        },
+                        color: 'rgba(252, 141, 98, 1)',
+                        areaStyle: {
+                            color: {
+                                type: 'linear',
+                                x: 0,
+                                y: 0,
+                                x2: 0,
+                                y2: 1,
+                                colorStops: [{
+                                    offset: 0, color: 'rgba(252, 141, 98, 0.1)'
+                                }, {
+                                    offset: 1, color: 'rgba(252, 141, 98, 0.01)'
+                                }]
+                            }
+                        },
+                        data: [820, 790, 760, 720, 690, 720, 780, 800, 760, 730, 770, 810]
+                    },
+                    {
+                        name: 'Green Reaper Home',
+                        type: 'line',
+                        smooth: true,
+                        lineStyle: {
+                            width: 2
+                        },
+                        color: 'rgba(87, 181, 231, 1)',
+                        areaStyle: {
+                            color: {
+                                type: 'linear',
+                                x: 0,
+                                y: 0,
+                                x2: 0,
+                                y2: 1,
+                                colorStops: [{
+                                    offset: 0, color: 'rgba(87, 181, 231, 0.1)'
+                                }, {
+                                    offset: 1, color: 'rgba(87, 181, 231, 0.01)'
+                                }]
+                            }
+                        },
+                        data: [320, 302, 301, 334, 350, 380, 400, 410, 390, 360, 340, 330]
+                    }
+                ]
+            };
+            
+            myChart.setOption(option);
+            
+            window.addEventListener('resize', function() {
+                myChart.resize();
+            });
+        });
+    </script>
+
+      <!-- 💬 Chatbot Sidebar -->
+<div id="chatbotSidebar" class="fixed top-0 right-0 h-full w-full md:w-1/3 bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+    <!-- Header -->
+    <div class="bg-primary text-white p-4 text-sm font-semibold flex justify-between items-center">
+      <span>Green Reaper Assistant</span>
+      <button onclick="toggleChatbotSidebar()" class="text-white hover:text-gray-200">
+        <i class="ri-close-line text-xl"></i>
+      </button>
+    </div>
+  
+    <!-- Chat Messages -->
+    <div id="chatbotMessages" class="flex-1 p-4 overflow-y-auto text-sm text-gray-700">
+      <div class="text-gray-500 mb-2">Hello! How can I help you with this project?</div>
+    </div>
+  
+    <!-- Input -->
+    <form id="chatbotForm" class="p-4 border-t flex gap-2">
+      <input type="text" id="chatbotInput" class="flex-1 border rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary" placeholder="Ask me something..." required>
+      <button type="submit" class="bg-primary text-white px-4 py-2 text-sm rounded hover:bg-indigo-600">Send</button>
+    </form>
+  </div>
+  
+  <!-- 🟣 Fixed Toggle Button (bottom right) -->
+  <button onclick="toggleChatbotSidebar()" class="fixed bottom-6 right-6 bg-primary text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg z-40 hover:bg-indigo-700">
+    <i class="ri-chat-3-line text-2xl"></i>
+  </button>
+
+  <script>
+    function toggleChatbotSidebar() {
+      const panel = document.getElementById("chatbotSidebar");
+      panel.classList.toggle("translate-x-full"); // Slides in/out
+      fetch('http://0.0.0.0:7000/apps/multi_tool_agent/users/u_123/sessions/s_123', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({}) // Sending empty JSON object
+        })
+        .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+        })
+        .then(data => {
+        console.log('✅ Success:', data);
+        })
+        .catch(error => {
+        console.error('❌ Error:', error);
+    });
+    }
+  
+    document.getElementById("chatbotForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const input = document.getElementById("chatbotInput");
+      const msg = input.value.trim();
+      if (!msg) return;
+      
+      const chatBox = document.getElementById("chatbotMessages");
+      chatBox.innerHTML += `<div class="text-right mb-2"><span class="inline-block bg-indigo-100 px-3 py-2 rounded-lg">${msg}</span></div>`;
+      input.value = "";
+      chatBox.scrollTop = chatBox.scrollHeight;
+        
+      fetch('http://localhost:7000/run', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            app_name: "multi_tool_agent",
+            user_id: "u_123",
+            session_id: "s_123",
+            new_message: {
+            role: "user",
+            parts: [
+                { text: msg }
+            ]
+            },
+        })
+        })
+        .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+        })
+        .then(data => {
+            chatBox.innerHTML += `<div class="text-left mb-2"><span class="inline-block bg-gray-100 px-3 py-2 rounded-lg">${data[0].content.parts[0].text}</span></div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+        })
+        .catch(error => {
+        console.error('❌ Error:', error);
+        });
+    });
+  </script>
+  
+
+ <!-- Modal -->
+ <div id="popupModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 hidden z-50">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-11/12 max-w-2xl overflow-y-auto max-h-[80vh] relative">
+      <button onclick="closeModal()" class="absolute top-2 right-2 text-gray-600 hover:text-black text-xl">&times;</button>
+      <div id="popupContent" class="text-gray-700">
+        <!-- Dynamic content goes here -->
+      </div>
+    </div>
+  </div>
+  <script>
+    function openModal(type) {
+      const popup = document.getElementById('popupModal');
+      const content = document.getElementById('popupContent');
+    
+      if (type === 'financial') {
+        content.innerHTML = document.getElementById('financial_html').innerHTML;
+      } else if (type === 'sustainability') {
+        content.innerHTML = document.getElementById('sustainability_html').innerHTML;
+      } else if (type === 'durability') {
+        content.innerHTML = document.getElementById('durability_html').innerHTML;
+      } else if (type === 'threed_scripts') {
+        content.innerHTML = document.getElementById('threed_scripts').innerHTML;
+      }
+    
+      popup.classList.remove('hidden');
+    }
+    
+    function closeModal() {
+      document.getElementById('popupModal').classList.add('hidden');
+    }
+    </script>
+    
+    <!-- Hidden Data -->
+    <div id="financial_html" class="hidden">{{ financial_html | safe }}</div>
+    <div id="sustainability_html" class="hidden">{{ sustainability_html | safe }}</div>
+    <div id="durability_html" class="hidden">{{ durability_html | safe }}</div>
+    <div id="threed_scripts" class="hidden">
+        <h2 class="text-2xl font-bold mb-6 text-center">3D Model Viewer</h2>
+      
+        <div id="threejs-container"
+          class="relative w-full max-w-5xl mx-auto overflow-hidden bg-white rounded-lg"
+          style="height: 70vh;">
+          <!-- Three.js WebGL + Label renderer will be inserted here -->
+        </div>
+      
+    </div>
+
+    <div class="mt-6 flex flex-col w-screen">
+        <h2 class="text-2xl font-bold mt-8 text-center">Construction Planner</h2>
+        <div id="chart_div" class="mx-auto" style="width:90%">
+          
+        </div>
+    </div>
+
+  
+</body>
+</html>
